@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test du formulaire de commande</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-button {
+            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .test-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Test du formulaire de commande</h1>
+    
+    <button class="test-button" onclick="testShowOrderForm()">Tester showOrderForm</button>
+    <button class="test-button" onclick="testHideOrderForm()">Tester hideOrderForm</button>
+    <button class="test-button" onclick="testHandleOrderSubmit()">Tester handleOrderSubmit</button>
+    
+    <div id="result" class="result"></div>
+
+    <!-- Formulaire de test -->
+    <div id="orderForm" class="order-form-container" style="display: none;">
+        <div class="order-form-overlay" onclick="hideOrderForm()"></div>
+        <div class="order-form-content">
+            <div class="order-form-header">
+                <h2>Passer une commande</h2>
+                <button class="close-btn" onclick="hideOrderForm()">&times;</button>
+            </div>
+            <form id="orderFormElement" onsubmit="handleOrderSubmit(event)">
+                <div class="form-group">
+                    <label for="customerName">Nom du client *</label>
+                    <input type="text" id="customerName" name="customerName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="customerPhone">Numéro de téléphone *</label>
+                    <input type="tel" id="customerPhone" name="customerPhone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="selectedDish">Plat choisi</label>
+                    <input type="text" id="selectedDish" name="selectedDish" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label for="quantity">Quantité *</label>
+                    <input type="number" id="quantity" name="quantity" min="1" value="1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="deliveryLocation">Lieu de livraison *</label>
+                    <input type="text" id="deliveryLocation" name="deliveryLocation" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="deliveryTime">Heure de livraison *</label>
+                    <input type="time" id="deliveryTime" name="deliveryTime" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="additionalMessage">Message supplémentaire</label>
+                    <textarea id="additionalMessage" name="additionalMessage" rows="3" placeholder="Des précisions sur votre commande..."></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn" onclick="hideOrderForm()">Annuler</button>
+                    <button type="submit" class="submit-btn">Envoyer la commande</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+    function showOrderForm(dishName) {
+        document.getElementById('selectedDish').value = dishName;
+        document.getElementById('orderForm').style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        document.getElementById('result').innerHTML = '<strong>✅ showOrderForm exécuté</strong><br>Plat: ' + dishName + '<br>Formulaire affiché';
+    }
+
+    function hideOrderForm() {
+        document.getElementById('orderForm').style.display = 'none';
+        document.body.style.overflow = 'auto';
+        document.getElementById('result').innerHTML = '<strong>✅ hideOrderForm exécuté</strong><br>Formulaire caché';
+    }
+
+    function handleOrderSubmit(event) {
+        event.preventDefault();
+        
+        const formData = {
+            customerName: document.getElementById('customerName').value,
+            customerPhone: document.getElementById('customerPhone').value,
+            selectedDish: document.getElementById('selectedDish').value,
+            quantity: document.getElementById('quantity').value,
+            deliveryLocation: document.getElementById('deliveryLocation').value,
+            deliveryTime: document.getElementById('deliveryTime').value,
+            additionalMessage: document.getElementById('additionalMessage').value
+        };
+        
+        // Afficher les données dans la page au lieu d'une alerte
+        document.getElementById('result').innerHTML = 
+            '<strong>✅ Commande envoyée avec succès!</strong><br><br>' +
+            '<strong>Détails de la commande:</strong><br>' +
+            'Plat: ' + formData.selectedDish + '<br>' +
+            'Quantité: ' + formData.quantity + '<br>' +
+            'Client: ' + formData.customerName + '<br>' +
+            'Téléphone: ' + formData.customerPhone + '<br>' +
+            'Lieu de livraison: ' + formData.deliveryLocation + '<br>' +
+            'Heure de livraison: ' + formData.deliveryTime + '<br>' +
+            'Message: ' + (formData.additionalMessage || 'Aucun');
+        
+        hideOrderForm();
+        document.getElementById('orderFormElement').reset();
+    }
+
+    function testShowOrderForm() {
+        showOrderForm('Test Plat');
+    }
+
+    function testHideOrderForm() {
+        hideOrderForm();
+    }
+
+    function testHandleOrderSubmit() {
+        // Remplir le formulaire avec des données de test
+        document.getElementById('customerName').value = 'Test Client';
+        document.getElementById('customerPhone').value = '0123456789';
+        document.getElementById('selectedDish').value = 'Test Plat';
+        document.getElementById('quantity').value = '2';
+        document.getElementById('deliveryLocation').value = '123 Rue Test';
+        document.getElementById('deliveryTime').value = '12:30';
+        document.getElementById('additionalMessage').value = 'Test message';
+        
+        // Créer un événement de soumission simulé
+        const event = new Event('submit');
+        handleOrderSubmit(event);
+    }
+    </script>
+</body>
+</html>

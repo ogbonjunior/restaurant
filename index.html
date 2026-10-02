@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant La Marmite du Bénin </title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            padding: 25px 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            box-shadow: 0 6px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        .search-section {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .company-name {
+            font-size: 32px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            font-family: 'Georgia', serif;
+        }
+
+        .search-bar {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 15px 50px 15px 25px;
+            border: 3px solid #ffe0e0;
+            border-radius: 30px;
+            font-size: 17px;
+            transition: all 0.3s;
+            font-family: 'Georgia', serif;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: #ff6b6b;
+            box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.15);
+        }
+
+        .search-bar::after {
+            content: "🔍";
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 22px;
+        }
+
+        nav {
+            background: white;
+            border-top: 2px solid #ffe0e0;
+            position: relative;
+        }
+
+        .menu {
+            display: flex;
+            list-style: none;
+            justify-content: center;
+            gap: 0;
+            padding: 0;
+        }
+
+        .menu-item {
+            position: relative;
+            flex: 1;
+            max-width: 250px;
+        }
+
+        .menu-item > a {
+            display: block;
+            padding: 22px 30px;
+            color: #333;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.4s;
+            font-size: 18px;
+            border-right: 1px solid #f0f0f0;
+        }
+
+        .menu-item:last-child > a {
+            border-right: none;
+        }
+
+        .menu-item > a:hover {
+            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .submenu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            list-style: none;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            border-radius: 0 0 12px 12px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-15px);
+            transition: all 0.4s;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .menu-item:hover .submenu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .submenu li a {
+            display: block;
+            padding: 16px 25px;
+            color: #555;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 16px;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .submenu li:last-child a {
+            border-bottom: none;
+        }
+
+        .submenu li a:hover {
+            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+            color: white;
+            padding-left: 35px;
+        }
+
+        .content {
+            padding: 60px 20px 120px;
+            text-align: center;
+        }
+
+        .content h1 {
+            color: white;
+            font-size: 56px;
+            margin-bottom: 25px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            font-family: 'Georgia', serif;
+        }
+
+        .content p {
+            color: white;
+            font-size: 24px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            line-height: 1.6;
+        }
+
+        .scrolling-text {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            color: white;
+            padding: 15px 0;
+            overflow: hidden;
+            z-index: 999;
+        }
+
+        .scrolling-text-content {
+            display: inline-block;
+            white-space: nowrap;
+            animation: scroll 25s linear infinite;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .welcome-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 50px;
+            margin: 40px auto;
+            max-width: 1100px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .welcome-section h2 {
+            color: #ff6b6b;
+            font-size: 38px;
+            margin-bottom: 25px;
+        }
+
+        .welcome-content {
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        .welcome-left {
+            flex: 1;
+        }
+
+        .welcome-left p {
+            color: #555;
+            font-size: 18px;
+            line-height: 1.8;
+            text-shadow: none;
+            text-align: left;
+        }
+
+        .welcome-right {
+            flex: 1;
+            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+            padding: 30px;
+            border-radius: 15px;
+            color: white;
+        }
+
+        .welcome-right h3 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .menu-jour {
+            list-style: none;
+            padding: 0;
+        }
+
+        .menu-jour li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            font-size: 17px;
+        }
+
+        .menu-jour li:last-child {
+            border-bottom: none;
+        }
+
+        .menu-jour strong {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 19px;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-section {
+                max-width: 100%;
+            }
+
+            .menu {
+                flex-direction: column;
+            }
+
+            .menu-item {
+                max-width: 100%;
+            }
+
+            .menu-item > a {
+                border-right: none;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            .submenu {
+                position: static;
+                opacity: 0;
+                visibility: hidden;
+                transform: none;
+                box-shadow: none;
+                max-height: 0;
+                transition: all 0.4s, max-height 0.4s;
+            }
+
+            .menu-item:hover .submenu {
+                opacity: 1;
+                visibility: visible;
+                max-height: 200px;
+            }
+
+            .content h1 {
+                font-size: 36px;
+            }
+
+            .welcome-section {
+                padding: 30px;
+            }
+
+            .welcome-section h2 {
+                font-size: 28px;
+            }
+
+            .welcome-content {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo">🍽️</div>
+                </div>
+                <div class="search-section">
+                    <div class="company-name">Restaurant La Marmite du Bénin </div>
+                    <div class="search-bar">
+                        <input type="text" placeholder="Rechercher un plat ou menu...">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul class="menu">
+                <li class="menu-item">
+                    <a href="#">Plats à base de pâte</a>
+                    <ul class="submenu">
+                        <li><a href="pate-rouge-poisson.html">Pâte rouge + sauce tomate avec poisson frit</a></li>
+                        <li><a href="pate-noire-viande.html">Pâte noire + sauce gombo avec viande</a></li>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <a href="#">Plats à base de riz</a>
+                    <ul class="submenu">
+                        <li><a href="riz-gras-poulet.html">Riz au gras au poulet</a></li>
+                        <li><a href="riz-blanc-poisson.html">Riz blanc + sauce de tomate avec poisson</a></li>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <a href="#">Plats traditionnels</a>
+                    <ul class="submenu">
+                        <li><a href="akassa-legumes-poisson.html">Akassa + sauce légumes et poisson fumé</a></li>
+                        <li><a href="igname-arachide-porc.html">Igname pilée + sauce d'arachide avec viande de porc</a></li>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <a href="#">Plats rapides</a>
+                    <ul class="submenu">
+                        <li><a href="aloko-viande.html">Aloko + viande</a></li>
+                        <li><a href="omelette-sardine.html">Omelette au sardine</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="content">
+        <div class="container">
+            <h1>Bienvenue chez La Marmite du Bénin </h1>
+            <div class="welcome-section">
+                <h2>Une cuisine authentique et raffinée</h2>
+                <div class="welcome-content">
+                    <div class="welcome-left">
+                        <p>
+                            Découvrez notre menu gastronomique préparé avec des ingrédients frais et locaux. 
+                            Notre chef passionné vous propose une expérience culinaire unique dans une ambiance chaleureuse et conviviale.
+                            Cliquez sur nos menus pour découvrir nos spécialités et leurs recettes détaillées !
+                        </p>
+                    </div>
+                    <div class="welcome-right">
+                        <h3>Menu du Jour</h3>
+                        <ul class="menu-jour">
+                            <li><strong>Plats traditionnels</strong> Igname pilée + sauce d'arachide avec viande de porc</li>
+                            <li><strong>Plats rapides</strong> Omelette au sardine</li>
+                            <li><strong>Plats à base de riz</strong> Riz au gras au poulet</li>
+                            <li><strong>Prix</strong> 25€</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="scrolling-text">
+        <div class="scrolling-text-content">
+            🍴 Réservations au 01 23 45 67 89 • Ouvert du mardi au dimanche de 12h à 14h et de 19h à 22h • Menu du jour à 25€ • Terrasse disponible • Nouveau : Brunch tous les dimanches ! 🥐
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Omelette au sardine - Restaurant Délices</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            padding: 25px 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            box-shadow: 0 6px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        .company-name {
+            font-size: 32px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-family: 'Georgia', serif;
+        }
+
+        nav {
+            background: white;
+            border-top: 2px solid #ffe0e0;
+            position: relative;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin: 20px;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .content {
+            padding: 60px 20px 120px;
+            text-align: center;
+        }
+
+        .content h1 {
+            color: white;
+            font-size: 48px;
+            margin-bottom: 40px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            font-family: 'Georgia', serif;
+        }
+
+        .recipe-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 50px;
+            margin: 40px auto;
+            max-width: 1100px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            text-align: left;
+        }
+
+        .recipe-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .recipe-header h2 {
+            color: #ff6b6b;
+            font-size: 38px;
+            margin-bottom: 20px;
+        }
+
+        .image-and-ingredients {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 40px;
+            align-items: flex-start;
+        }
+
+        .image-container {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .recipe-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+
+        .image-and-ingredients .ingredients {
+            flex: 1;
+            min-width: 0;
+            margin-bottom: 0;
+        }
+
+        .recipe-section {
+            margin-bottom: 40px;
+            padding: 25px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .recipe-section h3 {
+            color: #ff6b6b;
+            font-size: 24px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .recipe-section h3::before {
+            content: "🍽️";
+            font-size: 28px;
+        }
+
+        .ingredients h3::before {
+            content: "🥘";
+        }
+
+        .preparation h3::before {
+            content: "👨‍🍳";
+        }
+
+        .recipe-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .recipe-section li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .recipe-section li:last-child {
+            border-bottom: none;
+        }
+
+        .recipe-section li::before {
+            content: "•";
+            color: #ff6b6b;
+            font-weight: bold;
+            display: inline-block;
+            width: 20px;
+            font-size: 20px;
+        }
+
+        .preparation ol {
+            counter-reset: step-counter;
+            list-style: none;
+            padding: 0;
+        }
+
+        .preparation li {
+            counter-increment: step-counter;
+            padding: 15px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 16px;
+            line-height: 1.7;
+            position: relative;
+            padding-left: 50px;
+        }
+
+        .preparation li:last-child {
+            border-bottom: none;
+        }
+
+        .preparation li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 15px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .price-tag {
+            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 24px;
+            font-weight: bold;
+            display: inline-block;
+            margin: 20px 0;
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .time-tag {
+            background: rgba(255, 107, 107, 0.2);
+            color: #ff6b6b;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: 600;
+            display: inline-block;
+            margin: 10px 0;
+        }
+
+        .order-section {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #ffe0e0;
+        }
+
+        .order-button {
+            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Georgia', serif;
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .order-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.6);
+        }
+
+        /* Styles pour le formulaire de commande */
+        .order-form-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10000;
+        }
+
+        .order-form-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .order-form-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .order-form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ffe0e0;
+        }
+
+        .order-form-header h2 {
+            color: #ff6b6b;
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: #999;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .close-btn:hover {
+            background: #ffe0e0;
+            color: #ff6b6b;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ffe0e0;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: 'Georgia', serif;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #ff6b6b;
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.15);
+        }
+        
+        .form-group input:disabled {
+            background-color: #f5f5f5;
+            color: #999;
+            cursor: not-allowed;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .cancel-btn,
+        .submit-btn {
+            flex: 1;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Georgia', serif;
+        }
+
+        .cancel-btn {
+            background: #f5f5f5;
+            color: #666;
+        }
+
+        .cancel-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+            color: white;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .content h1 {
+                font-size: 36px;
+            }
+
+            .recipe-container {
+                padding: 30px;
+            }
+
+            .recipe-header h2 {
+                font-size: 28px;
+            }
+
+            .image-and-ingredients {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .recipe-image {
+                height: 250px;
+            }
+
+            .image-and-ingredients .ingredients {
+                margin-bottom: 40px;
+            }
+
+            /* Styles pour le formulaire de commande sur mobile */
+            .order-form-content {
+                width: 95%;
+                padding: 20px;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .cancel-btn,
+            .submit-btn {
+                width: 100%;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="css/order-styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo">🍽️</div>
+                    <div class="company-name">Restaurant La Marmite du Bénin</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <a href="index.html" class="back-button">← Retour au menu</a>
+        </div>
+    </nav>
+
+    <div class="content">
+        <div class="container">
+            <h1>Omelette au sardine</h1>
+            <div class="recipe-container">
+                <div class="recipe-header">
+                    <h2>Un plat rapide et nutritif</h2>
+                    <div class="time-tag">Temps total : 30min</div>
+                    <div class="price-tag">12€</div>
+                </div>
+
+                <div class="image-and-ingredients">
+                    <div class="image-container">
+                        <img src="Image 8.jpg" alt="Omelette au sardine" class="recipe-image">
+                    </div>
+                    
+                    <div class="recipe-section ingredients">
+                        <h3>Ingrédients</h3>
+                        <ul>
+                            <li>6 œufs frais</li>
+                            <li>2 boîtes de sardines à l'huile (400g total)</li>
+                            <li>2 oignons moyens</li>
+                            <li>3 tomates mûres</li>
+                            <li>2 gousses d'ail</li>
+                            <li>1 poivron vert</li>
+                            <li>2 cuillères à soupe d'huile végétale</li>
+                            <li>1 bouquet de persil frais</li>
+                            <li>Piment selon votre goût</li>
+                            <li>Sel et poivre noir</li>
+                            <li>1 cuillère à café de paprika</li>
+                            <li>Citron pour la garniture</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="recipe-section preparation">
+                    <h3>Mode de préparation</h3>
+                    <ol>
+                        <li>Égoutter les sardines de leur huile, ôter les arêtes si désiré et émietter grossièrement le poisson.</li>
+                        <li>Hacher finement les oignons, couper les tomates en petits dés et émincer le poivron vert.</li>
+                        <li>Casser les œufs dans un grand bol, ajouter le sel, le poivre, le paprika et battre vigoureusement jusqu'à obtenir un mélange mousseux.</li>
+                        <li>Incorporer délicatement les sardines émiettées, les oignons hachés, les tomates coupées, le poivron émincé et l'ail écrasé dans le mélange d'œufs.</li>
+                        <li>Chauffer l'huile dans une grande poêle antiadhésive à feu moyen.</li>
+                        <li>Verser le mélange dans la poêle chaude et laisser cuire pendant 3-4 minutes jusqu'à ce que le bord commence à prendre.</li>
+                        <li>Réduire le feu, couvrir la poêle et laisser cuire encore 5-6 minutes jusqu'à ce que l'omelette soit bien prise. La retourner délicatement et faire cuire l'autre côté pendant 2 minutes.</li>
+                        <li>Transférer l'omelette sur un plat de service, garnir de persil frais haché et servir chaud avec des quartiers de citron.</li>
+                    </ol>
+                </div>
+
+                <div class="recipe-section">
+                    <h3>Recette complète</h3>
+                    <p>L'omelette au sardine est un plat rapide, économique et nutritif qui allie les protéines de qualité des œufs avec les oméga-3 des sardines. Cette préparation simple mais savoureuse est parfaite pour les repas pressés ou les brunchs improvisés. Les légumes frais ajoutent une note croquante et vitaminée, tandis que les épices relèvent subtilement l'ensemble. Ce plat complet se suffit à lui-même mais peut également être accompagné d'une salade verte pour un repas équilibré. C'est aussi une excellente façon d'introduire le poisson dans l'alimentation quotidienne de manière simple et délicieuse.</p>
+                </div>
+
+                <div class="order-section">
+                    <button class="order-button" onclick="showOrderForm('Omelette au sardine')">
+                        Commander ce plat
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Formulaire de commande -->
+    <div id="orderForm" class="order-form-container" style="display: none;">
+        <div class="order-form-overlay" onclick="hideOrderForm()"></div>
+        <div class="order-form-content">
+            <div class="order-form-header">
+                <h2>Passer une commande</h2>
+                <button class="close-btn" onclick="hideOrderForm()">&times;</button>
+            </div>
+            <form id="orderFormElement" onsubmit="handleOrderSubmit(event)">
+                <div class="form-group">
+                    <label for="customerName">Nom du client *</label>
+                    <input type="text" id="customerName" name="customerName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="customerPhone">Numéro de téléphone *</label>
+                    <input type="tel" id="customerPhone" name="customerPhone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="selectedDish">Plat choisi</label>
+                    <input type="text" id="selectedDish" name="selectedDish" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label for="quantity">Quantité *</label>
+                    <input type="number" id="quantity" name="quantity" min="1" value="1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="orderType">Type de commande *</label>
+                    <select id="orderType" name="orderType" required onchange="updateDeliveryField()">
+                        <option value="">-- Sélectionnez une option --</option>
+                        <option value="sur-place">Sur place</option>
+                        <option value="a-domicile">À domicile</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="deliveryLocation">Lieu de livraison *</label>
+                    <input type="text" id="deliveryLocation" name="deliveryLocation" disabled>
+                </div>
+                
+                <div class="form-group">
+                    <label for="deliveryTime">Heure de livraison *</label>
+                    <input type="time" id="deliveryTime" name="deliveryTime" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="additionalMessage">Message supplémentaire</label>
+                    <textarea id="additionalMessage" name="additionalMessage" rows="3" placeholder="Des précisions sur votre commande..."></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn" onclick="hideOrderForm()">Annuler</button>
+                    <button type="submit" class="submit-btn">Envoyer la commande</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+    function showOrderForm(dishName) {
+        document.getElementById('selectedDish').value = dishName;
+        document.getElementById('orderForm').style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function hideOrderForm() {
+        document.getElementById('orderForm').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    function updateDeliveryField() {
+        const orderType = document.getElementById('orderType').value;
+        const deliveryLocation = document.getElementById('deliveryLocation');
+        
+        if (orderType === 'sur-place') {
+            // Sur place: désactiver le champ lieu de livraison
+            deliveryLocation.disabled = true;
+            deliveryLocation.value = '';
+            deliveryLocation.required = false;
+        } else if (orderType === 'a-domicile') {
+            // À domicile: activer le champ lieu de livraison
+            deliveryLocation.disabled = false;
+            deliveryLocation.required = true;
+        } else {
+            // Aucun choix: désactiver
+            deliveryLocation.disabled = true;
+            deliveryLocation.value = '';
+            deliveryLocation.required = false;
+        }
+    }
+
+    function handleOrderSubmit(event) {
+        event.preventDefault();
+        
+        const orderType = document.getElementById('orderType').value;
+        const orderTypeDisplay = orderType === 'sur-place' ? 'Sur place' : 'À domicile';
+        const deliveryInfo = orderType === 'sur-place' ? '' : '\nLieu de livraison: ' + document.getElementById('deliveryLocation').value;
+        
+        const formData = {
+            customerName: document.getElementById('customerName').value,
+            customerPhone: document.getElementById('customerPhone').value,
+            selectedDish: document.getElementById('selectedDish').value,
+            quantity: document.getElementById('quantity').value,
+            orderType: orderTypeDisplay,
+            deliveryLocation: document.getElementById('deliveryLocation').value,
+            deliveryTime: document.getElementById('deliveryTime').value,
+            additionalMessage: document.getElementById('additionalMessage').value
+        };
+        
+        alert('Commande envoyée avec succès !\n\nDétails de la commande:\n' +
+              'Plat: ' + formData.selectedDish + '\n' +
+              'Quantité: ' + formData.quantity + '\n' +
+              'Type: ' + formData.orderType + deliveryInfo + '\n' +
+              'Client: ' + formData.customerName + '\n' +
+              'Téléphone: ' + formData.customerPhone + '\n' +
+              'Heure: ' + formData.deliveryTime);
+        
+        hideOrderForm();
+        document.getElementById('orderFormElement').reset();
+        updateDeliveryField();
+    }
+    </script>
+</body>
